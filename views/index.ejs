@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>	Movie App </title>
+	<% include head %>
+</head>
+<body>
+
+	<% include navbar %>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<% if (req.url === '/') { %>
+					<h1>Now Playing</h1>
+				<% } %>
+				<% if (req.url === '/favorites') { %>
+					<h1>Yor Favorite Movies</h1>
+				<% } %>
+			</div>
+				<div class="col-sm-12">
+					<% parsedData.forEach((movie)=>{ %>
+						<div class="col-md-3 col-sm-4 poster">
+							<!-- <p> <%= movie.title %> </p> -->
+							<a href="movie/<%= movie.id %> "><img src="<%= imageBaseUrl + movie.poster_path %> "/></a>
+							<form action="/add-movie/<%= movie.id %>" method="post" class="form-inline">
+								<% if (req.url === '/') { %>
+								<input type="submit" class="btn btn-primary" value="Add To Favorites"/>
+								<% } %>
+								<% if (req.url === '/favorites') { %>
+								<button formaction="/delete-movie/<%= movie.id %>" class="btn btn-primary">Delete</button>
+								<% } %>
+							  </form>
+						</div>
+					<%}) %> 
+			</div>
+		</div>
+	</div>
+</body>
+</html>
